@@ -1,130 +1,149 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Special Reaction</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
     
     <style>
         body {
-            font-family: 'Playfair Display', serif;
-            overflow: hidden; /* Prevents scrollbars when emojis fly off-screen */
-            user-select: none; /* Prevents text selection during rapid clicking */
-            background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+            /* Using elegant serif fonts for a romantic feel */
+            font-family: 'Cormorant Garamond', serif;
+            /* Prevents scrollbars when emojis fly off-screen */
+            overflow: hidden; 
+            /* Prevents text selection when clicking rapidly */
+            user-select: none; 
+            /* Soft, romantic gradient background */
+            background: linear-gradient(135deg, #fff0f3 0%, #ffc8dd 50%, #ffb5a7 100%);
+            margin: 0;
             height: 100vh;
             width: 100vw;
-            margin: 0;
         }
 
-        /* Styling for the floating emojis */
         .emoji-particle {
             position: absolute;
-            pointer-events: none; /* Allows clicks to pass through them */
+            pointer-events: none; /* Allows clicks to pass through */
             font-size: 2.5rem;
+            /* Center the emoji on the click coordinate */
             transform: translate(-50%, -50%);
+            /* Use a cubic-bezier for a natural "pop and float" physics feel */
             animation: burstFly 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
             will-change: transform, opacity;
             z-index: 10;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 4px 6px rgba(255, 105, 135, 0.3));
         }
 
-        /* Physics-like animation for the emojis bursting outwards */
         @keyframes burstFly {
             0% {
                 transform: translate(-50%, -50%) scale(0.1) rotate(0deg);
                 opacity: 1;
             }
             15% {
+                /* Initial pop outwards */
                 transform: translate(calc(-50% + var(--dx) * 0.2), calc(-50% + var(--dy) * 0.2)) scale(var(--scale)) rotate(calc(var(--rot) * 0.2));
                 opacity: 1;
             }
             80% {
-                opacity: 0.9;
+                opacity: 0.8;
             }
             100% {
+                /* Final destination and fade out */
                 transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(var(--scale)) rotate(var(--rot));
                 opacity: 0;
             }
         }
 
-        /* Gentle pulse animation for the initial prompt */
         @keyframes pulse-gentle {
             0%, 100% { opacity: 0.6; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.05); }
         }
         
         .animate-pulse-gentle {
-            animation: pulse-gentle 2.5s infinite ease-in-out;
+            animation: pulse-gentle 3s infinite ease-in-out;
+        }
+
+        /* Utility class for the elegant cursive font */
+        .font-cursive {
+            font-family: 'Great Vibes', cursive;
         }
     </style>
 </head>
 <body class="flex items-center justify-center cursor-pointer">
 
     <!-- Initial Instruction Text -->
-    <div id="initial-text" class="text-center absolute z-20 transition-opacity duration-1000 ease-out pointer-events-none px-6">
-        <h1 class="text-3xl md:text-5xl text-rose-800 font-semibold mb-4 drop-shadow-sm">Click anywhere...</h1>
-        <p class="text-rose-600 text-xl md:text-2xl animate-pulse-gentle italic">to see my reaction</p>
+    <div id="initial-text" class="text-center absolute z-20 transition-all duration-1000 ease-out pointer-events-none px-6">
+        <div class="w-16 h-16 mx-auto mb-4 opacity-70 animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#be123c" class="w-full h-full">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-5.421-1.59-1.59" />
+            </svg>
+        </div>
+        <h1 class="text-3xl md:text-5xl text-rose-800 font-semibold mb-2 drop-shadow-sm font-cursive tracking-wider">Click anywhere</h1>
+        <p class="text-rose-600 text-xl md:text-2xl animate-pulse-gentle italic tracking-wide">to feel the magic...</p>
     </div>
 
-    <!-- Final Message (Hidden initially) -->
-    <div id="final-message" class="hidden text-center absolute z-30 px-6 max-w-3xl opacity-0 translate-y-8 transition-all duration-1000 ease-out pointer-events-none">
-        <h2 class="text-4xl md:text-6xl text-rose-900 font-semibold leading-tight drop-shadow-md">
+    <div id="final-message" class="hidden text-center absolute z-30 px-8 max-w-4xl opacity-0 translate-y-8 transition-all duration-[2000ms] ease-out pointer-events-none">
+        <h2 class="text-4xl md:text-6xl text-rose-900 font-semibold leading-tight drop-shadow-md mb-6">
             Thank you for your words.
         </h2>
-        <p class="mt-6 text-2xl md:text-3xl text-rose-800 italic font-light drop-shadow-sm">
+        <p class="text-3xl md:text-5xl text-rose-700 font-cursive drop-shadow-sm">
             I can only describe from this reaction.
         </p>
     </div>
 
     <script>
-        // Configuration
-        const emojis = ['💐', '🌺', '❤️', '😍'];
-        const burstDuration = 10000; // 10 seconds in milliseconds
-        const particleLifetime = 2000; // 2 seconds animation duration
+        // Array of romantic emojis requested
+        const emojis = ['💐', '🌸', '🌹', '💖', '😍'];
+        const burstDuration = 10000; // Exactly 10 seconds in milliseconds
+        const particleLifetime = 2000; // Emojis live for 2 seconds
+        const spawnRate = 35; // Spawn a batch of emojis every 35ms for a dense burst
+        
         let hasTriggered = false;
         let burstInterval;
 
-        // Listen for clicks anywhere on the body
         document.body.addEventListener('click', (e) => {
-            // Prevent multiple triggers
+            // Prevent multiple sequences from running simultaneously
             if (hasTriggered) return;
             hasTriggered = true;
 
+            // Capture exact click coordinates
             const startX = e.clientX;
             const startY = e.clientY;
 
             // 1. Hide the initial instruction text smoothly
             const initialText = document.getElementById('initial-text');
             initialText.style.opacity = '0';
+            initialText.style.transform = 'scale(0.9)';
             setTimeout(() => {
                 initialText.style.display = 'none';
             }, 1000);
 
-            // 2. Initial big pop of emojis to start things off
-            for(let i = 0; i < 40; i++) {
+            // 2. Initial big pop to emphasize the start
+            for(let i = 0; i < 30; i++) {
                 spawnEmoji(startX, startY);
             }
 
             // 3. Continuous burst fountain for 10 seconds
             burstInterval = setInterval(() => {
-                // Spawn 3-4 emojis every 40ms to create a dense, continuous flow
+                // Spawn 3-4 emojis per tick to create a dense, continuous flow
                 for(let i = 0; i < 3; i++) {
                     spawnEmoji(startX, startY);
                 }
-            }, 40);
+            }, spawnRate);
 
             // 4. Stop the burst after exactly 10 seconds
             setTimeout(() => {
                 clearInterval(burstInterval);
                 
-                // Wait for the final emojis to finish flying before showing the message
+                // Wait for the last spawned emojis to finish flying and disappear
                 setTimeout(() => {
                     revealFinalMessage();
-                }, particleLifetime + 500); // 2.5 seconds delay
+                }, particleLifetime + 300); // Wait the lifetime of the particle + a tiny buffer
 
             }, burstDuration);
         });
@@ -133,33 +152,36 @@
             const el = document.createElement('div');
             el.className = 'emoji-particle';
             
-            // Pick a random emoji from the array
+            // Pick a random emoji from the predefined array
             el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
 
-            // Calculate random trajectories and physical properties
-            const angle = Math.random() * Math.PI * 2; // Random 360 degree direction
-            const velocity = Math.random() * 600 + 150; // Distance it will travel (150px to 750px)
+            // Physics calculations for random trajectories
+            const angle = Math.random() * Math.PI * 2; // Random full-circle direction
+            // Random distance (velocity). Range: 150px to 850px outwards
+            const velocity = Math.random() * 700 + 150; 
             
-            // Convert polar to cartesian coordinates for X/Y translation
+            // Convert polar coordinates to cartesian (X/Y)
             const dx = Math.cos(angle) * velocity;
             const dy = Math.sin(angle) * velocity;
             
-            // Randomize size and rotation for organic feel
-            const scale = Math.random() * 0.8 + 0.6; // Scale between 0.6x and 1.4x
+            // Randomize visual properties for organic variety
+            const scale = Math.random() * 0.7 + 0.6; // Scale between 0.6x and 1.3x
             const rot = Math.random() * 360 - 180; // Rotation between -180 and +180 degrees
 
-            // Apply starting positions and custom CSS variables for the keyframe animation
+            // Set starting position
             el.style.left = `${x}px`;
             el.style.top = `${y}px`;
+            
+            // Inject dynamic values into CSS variables used by the keyframe animation
             el.style.setProperty('--dx', `${dx}px`);
             el.style.setProperty('--dy', `${dy}px`);
             el.style.setProperty('--scale', scale);
             el.style.setProperty('--rot', `${rot}deg`);
 
-            // Add to DOM
+            // Attach to document body
             document.body.appendChild(el);
 
-            // Clean up the DOM element after its animation finishes to maintain performance
+            // Garbage collection: remove the element once its animation ends
             setTimeout(() => {
                 el.remove();
             }, particleLifetime);
@@ -168,16 +190,17 @@
         function revealFinalMessage() {
             const finalMsg = document.getElementById('final-message');
             
-            // Remove hidden class so it's in the DOM flow
+            // Make element block-level but still invisible (opacity-0)
             finalMsg.classList.remove('hidden');
             
-            // Trigger a browser reflow so the transition animations will execute properly
+            // Force browser to recalculate layout so the transition works
             void finalMsg.offsetWidth;
             
-            // Apply classes to slide up and fade in
+            // Trigger CSS transition (fade in and slide up)
             finalMsg.classList.remove('opacity-0', 'translate-y-8');
             finalMsg.classList.add('opacity-100', 'translate-y-0');
         }
     </script>
 </body>
 </html>
+```
